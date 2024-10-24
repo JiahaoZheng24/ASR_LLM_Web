@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASR & LLM Web Interface</title>
+    <script>
+        async function recordAudio() {
+            try {
+                const response = await fetch('/record', {
+                    method: 'POST',
+                });
+                const data = await response.json();
+                if (data.error) {
+                    alert("Error: " + data.error);
+                } else {
+                    document.getElementById("recognized_text").innerText = "Recognized Text: " + data.recognized_text;
+                    document.getElementById("response_text").innerText = "GPT Response: " + data.response;
+                }
+            } catch (error) {
+                alert("An error occurred: " + error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>ASR & LLM Web Interface</h1>
+    <button onclick="recordAudio()">Record and Transcribe</button>
+    <p id="recognized_text">Recognized Text: </p>
+    <p id="response_text">GPT Response: </p>
+</body>
+</html>
